@@ -81,8 +81,8 @@ class Login extends StatelessWidget {
                 Container(
                   child: TextButton(
                     child: Text("Don't have an account? Sign up."),
-                    onPressed: () =>
-                        Navigator.pushReplacementNamed(context, '/signup'),
+                    onPressed: () => Navigator.pushReplacementNamed(
+                        context, '/signup/email-phone'),
                   ),
                 ),
               ],

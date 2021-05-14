@@ -14,6 +14,9 @@ class App extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => User()),
         Provider(create: (context) => Login()),
         Provider(create: (context) => UserPage()),
+        Provider(create: (context) => EmailPhone()),
+        Provider(create: (context) => NamePassword()),
+        Provider(create: (context) => Birthday()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -23,7 +26,10 @@ class App extends StatelessWidget {
         routes: {
           '/': (context) => Login(),
           '/home': (context) => Home(),
-          '/signup': (context) => SignUp(),
+          '/signup/email-phone': (context) => EmailPhone(),
+          '/signup/user': (context) => NamePassword(),
+          '/signup/birthday': (context) => Birthday(),
+          '/signup/done': (context) => Finish(),
         },
       ),
     );

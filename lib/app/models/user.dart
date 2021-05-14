@@ -4,6 +4,9 @@ class User extends ChangeNotifier {
   String id;
   String name;
   String username;
+  String password;
+  String email;
+  String birthday;
   String profilePhoto;
   String followersUrl;
   String followingUrl;
@@ -50,6 +53,31 @@ class User extends ChangeNotifier {
     following = json['following'];
     posts = json['posts'];
 
+    notifyListeners();
+  }
+
+  void setName(name) {
+    this.name = name;
+    notifyListeners();
+  }
+
+  void setEmail(email) {
+    this.email = email;
+    notifyListeners();
+  }
+
+  void setPassword(password) {
+    this.password = password;
+    notifyListeners();
+  }
+
+  void setBirthday(birthday) {
+    this.birthday = birthday;
+    notifyListeners();
+  }
+
+  void setUsername(username) {
+    this.username = username;
     notifyListeners();
   }
 }

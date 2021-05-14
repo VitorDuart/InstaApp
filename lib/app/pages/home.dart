@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:insta_app/app/pages/buildingApp.dart';
 import 'package:insta_app/app/pages/userPage.dart';
 import 'package:insta_app/app/widgets/navigationBarWidget.dart';
-import 'package:insta_app/app/models/user.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -16,9 +15,7 @@ class HomeState extends State<Home> {
     BuildWidget(),
     BuildWidget(),
     BuildWidget(),
-    UserPage(
-      user: testUser,
-    ),
+    UserPage(),
   ];
 
   void navCallback(index) {
@@ -36,11 +33,3 @@ class HomeState extends State<Home> {
     );
   }
 }
-
-final testUser = User(
-  name: 'Vitor Duarte',
-  username: 'pvitor.duarte',
-  posts: '4',
-  followers: '249',
-  following: '283',
-);
