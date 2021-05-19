@@ -41,6 +41,19 @@ class User extends ChangeNotifier {
     posts = json['posts'];
   }
 
+  Map<String, dynamic> toJson() => {
+        "id": this.id,
+        "name": this.name,
+        "username": this.username,
+        "profilePhoto": this.profilePhoto,
+        "followersUrl": this.followersUrl,
+        "followingUrl": this.followingUrl,
+        "postsUrl": this.postsUrl,
+        "followers": this.followers,
+        "following": this.following,
+        "posts": this.posts,
+      };
+
   void setUser(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
@@ -56,8 +69,18 @@ class User extends ChangeNotifier {
     notifyListeners();
   }
 
+  void setId(id) {
+    this.id = id;
+    notifyListeners();
+  }
+
   void setName(name) {
     this.name = name;
+    notifyListeners();
+  }
+
+  void setUsername(username) {
+    this.username = username;
     notifyListeners();
   }
 
@@ -66,18 +89,13 @@ class User extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setPassword(password) {
-    this.password = password;
-    notifyListeners();
-  }
-
   void setBirthday(birthday) {
     this.birthday = birthday;
     notifyListeners();
   }
 
-  void setUsername(username) {
-    this.username = username;
+  void setPassword(password) {
+    this.password = password;
     notifyListeners();
   }
 }

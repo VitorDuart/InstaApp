@@ -1,28 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:insta_app/app/models/user.dart';
+import 'package:insta_app/app/services/login.dart';
 
 // ignore: must_be_immutable
 class Login extends StatelessWidget {
   final _keyForm = GlobalKey<FormState>();
+  LoginService loginService = LoginService();
   String userInput;
   String password;
 
-  void login(context) {
-    // Salva o estado atual do formulário.
-    // Em outras palvras salva os estado dos
-    // TextFormFiled
+  onPressLogin(context, user) {
     _keyForm.currentState.save();
 
-    //Aqui que você vai chamar um serviço
-    // para acessar os usuários que estão
-    // no servidor.
-    // Pegue o json e modifique o modelo que está
-    // com o notify.
-    // Seria interessante criar um método para lidar com isso.
-    // Pois exitem outras questões a serem implementas.
-
-    Navigator.pushReplacementNamed(context, '/home');
+    Future<Map<String, dynamic>> response =
+        loginService.login(userInput, password);
+    response.then((json) {
+      if (json != null) {
+        user.setUser(json);
+        Navigator.pushReplacementNamed(context, '/home');
+      }
+      print("The user or password not exist");
+    });
   }
 
   @override
@@ -54,7 +53,7 @@ class Login extends StatelessWidget {
                       Container(
                         child: TextButton(
                           child: Text('Login'),
-                          onPressed: () => login(context),
+                          onPressed: () => onPressLogin(context, user),
                         ),
                       ),
                     ],

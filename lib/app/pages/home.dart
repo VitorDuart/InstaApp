@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:insta_app/app/pages/buildingApp.dart';
+import 'package:insta_app/app/pages/feed.dart';
 import 'package:insta_app/app/pages/userPage.dart';
 import 'package:insta_app/app/widgets/navigationBarWidget.dart';
 
@@ -11,18 +12,14 @@ class Home extends StatefulWidget {
 class HomeState extends State<Home> {
   int pageIndex = 0;
   final pages = [
-    BuildWidget(),
+    Feed(),
     BuildWidget(),
     BuildWidget(),
     BuildWidget(),
     UserPage(),
   ];
 
-  void navCallback(index) {
-    setState(() {
-      pageIndex = index;
-    });
-  }
+  void navCallback(index) => setState(() => pageIndex = index);
 
   @override
   Widget build(BuildContext context) {

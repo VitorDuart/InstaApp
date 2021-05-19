@@ -19,6 +19,7 @@ class UserPageState extends State<UserPage>
   void initState() {
     super.initState();
     _tabController = TabController(vsync: this, length: 2);
+    userService = UserService();
     posts = userService.posts();
   }
 
@@ -87,7 +88,10 @@ class UserPageState extends State<UserPage>
                     margin: EdgeInsets.only(
                         left: MediaQuery.of(context).size.width * 0.05),
                     child: Column(
-                      children: <Widget>[Text(user.posts), Text('Posts')],
+                      children: <Widget>[
+                        Text(user.posts == null ? '0' : user.posts),
+                        Text('Posts')
+                      ],
                     ),
                   ),
                   Container(

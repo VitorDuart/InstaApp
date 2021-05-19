@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:insta_app/app/models/user.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:scroll_date_picker/scroll_date_picker.dart';
 import 'dart:math';
 
@@ -266,8 +265,23 @@ class Finish extends StatefulWidget {
 class FinishState extends State<Finish> {
   String numberUser = Random().nextInt(100).toString();
 
-  void updateUsername(context, user) {
-    user.setUsername(user.name + numberUser);
+  void fillUser(context, user) {
+    user.setUser({
+      'id': '',
+      'name': user.name,
+      'username':
+          '${user.name.replaceAll(' ', '').toLowerCase()}${this.numberUser}',
+      'password': user.password,
+      'email': user.email,
+      'birthday': user.birthday,
+      'profilePhoto': '',
+      'followersUrl': '',
+      'followingUrl': '',
+      'postsUrl': '',
+      'followers': '0',
+      'following': '0',
+      'posts': '0',
+    });
     Navigator.pushReplacementNamed(context, '/home');
   }
 
@@ -280,12 +294,13 @@ class FinishState extends State<Finish> {
             child: Column(
               children: [
                 Text('WELCOME TO INSTAGRAM,'),
-                Text(user.name + numberUser),
+                Text(
+                    '${user.name.replaceAll(' ', '').toLowerCase()}${this.numberUser}'),
                 Text(
                   'Find People to follow and start sharing photos. You can Change your username anytime',
                 ),
                 TextButton(
-                  onPressed: () => updateUsername(context, user),
+                  onPressed: () => fillUser(context, user),
                   child: Text('Next'),
                 ),
               ],
