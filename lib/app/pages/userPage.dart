@@ -34,7 +34,7 @@ class UserPageState extends State<UserPage>
   Container postBuilder(context, idx) {
     Post post = posts[idx];
     return Container(
-      child: Image.network(post.assetsUrl[0]),
+      child: null//Image.network(post.assetsUrl[0]),
     );
   }
 
@@ -75,8 +75,8 @@ class UserPageState extends State<UserPage>
                       height: 85,
                       decoration: BoxDecoration(
                           shape: BoxShape.circle, color: Colors.blue),
-                      child: user.profilePhoto == null
-                          ? null
+                      child: user.profilePhoto == ''
+                          ? Icon(Icons.person, size: 80)
                           : Image.network(user.profilePhoto),
                     ),
                     Container(

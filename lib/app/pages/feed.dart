@@ -16,7 +16,6 @@ class FeedState extends State<Feed> {
   Widget build(BuildContext context) {
     return Consumer<User>(
       builder: (context, user, widget) {
-        print(user.name);
         return Scaffold(
           appBar: AppBar(
             title: Text(
@@ -27,7 +26,8 @@ class FeedState extends State<Feed> {
             backgroundColor: Colors.white,
             actions: [
               TextButton(
-                onPressed: newPost,
+                onPressed: () =>
+                    Navigator.pushNamed(context, '/home/selectimage'),
                 child: Icon(
                   Icons.add_box_outlined,
                   color: Colors.black,
@@ -35,7 +35,7 @@ class FeedState extends State<Feed> {
                 ),
               ),
               TextButton(
-                onPressed: newPost,
+                onPressed: () {},
                 child: Icon(
                   Icons.favorite_border,
                   color: Colors.black,
@@ -61,7 +61,7 @@ class FeedState extends State<Feed> {
                 child: Center(child: Text('Em breve stories')),
               ),
               //Expanded(child: ListView()),
-              //Image.network('http://10.0.0.118:3000/images/profile.jpg'),
+              Image.network('http://10.0.0.118:3000/images/ObecJwb8.jpg'),
             ],
           ),
         );

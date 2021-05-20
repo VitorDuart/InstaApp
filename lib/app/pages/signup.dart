@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:insta_app/app/models/user.dart';
+import 'package:insta_app/app/services/userService.dart';
 import 'package:provider/provider.dart';
 import 'package:scroll_date_picker/scroll_date_picker.dart';
-import 'dart:math';
 
 class EmailPhone extends StatefulWidget {
   @override
@@ -209,7 +209,7 @@ class BirthdayState extends State<Birthday> {
               child: Column(
                 children: [
                   Image.asset(
-                    'images/birthday_cake.png',
+                    'assets/images/birthday_cake.png',
                     width: 80,
                     height: 80,
                   ),
@@ -232,7 +232,7 @@ class BirthdayState extends State<Birthday> {
               child: Text('Next'),
             ),
             Container(
-              width: MediaQuery.of(context).size.width * 0.6,
+              //width: MediaQuery.of(context).size.width * 0.9,
               height: MediaQuery.of(context).size.width * 0.2,
               child: ScrollDatePicker(
                 itemExtent: 33.0,
@@ -263,26 +263,17 @@ class Finish extends StatefulWidget {
 }
 
 class FinishState extends State<Finish> {
-  String numberUser = Random().nextInt(100).toString();
+  UserService userService = UserService();
 
-  void fillUser(context, user) {
-    user.setUser({
-      'id': '',
-      'name': user.name,
-      'username':
-          '${user.name.replaceAll(' ', '').toLowerCase()}${this.numberUser}',
-      'password': user.password,
-      'email': user.email,
-      'birthday': user.birthday,
-      'profilePhoto': '',
-      'followersUrl': '',
-      'followingUrl': '',
-      'postsUrl': '',
-      'followers': '0',
-      'following': '0',
-      'posts': '0',
+  onPressedFinish(context, user) {
+    Future<Map<String, dynamic>> response = userService.store(user);
+    response.then((value) {
+      print(value);
+      if (value != null) {
+        user.setUser(value);
+        Navigator.pushReplacementNamed(context, '/home');
+      }
     });
-    Navigator.pushReplacementNamed(context, '/home');
   }
 
   @override
@@ -294,13 +285,12 @@ class FinishState extends State<Finish> {
             child: Column(
               children: [
                 Text('WELCOME TO INSTAGRAM,'),
-                Text(
-                    '${user.name.replaceAll(' ', '').toLowerCase()}${this.numberUser}'),
+                Text(user.name),
                 Text(
                   'Find People to follow and start sharing photos. You can Change your username anytime',
                 ),
                 TextButton(
-                  onPressed: () => fillUser(context, user),
+                  onPressed: () => onPressedFinish(context, user),
                   child: Text('Next'),
                 ),
               ],

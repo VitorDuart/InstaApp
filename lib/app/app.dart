@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:insta_app/app/pages/home.dart';
 import 'package:insta_app/app/pages/loginPage.dart';
+import 'package:insta_app/app/pages/newPost.dart';
 import 'package:insta_app/app/pages/signup.dart';
 import 'package:insta_app/app/pages/userPage.dart';
 import 'package:provider/provider.dart';
@@ -21,11 +22,13 @@ class App extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Instagram',
-        theme: ThemeData(primaryColor: Colors.blue),
+        theme: ThemeData(primaryColor: Colors.amber),
         initialRoute: '/',
         routes: {
           '/': (context) => Login(),
           '/home': (context) => Home(),
+          '/home/selectimage': (context) => PickImage(),
+          '/home/newpost': (context) => NewPost(),
           '/signup/email-phone': (context) => EmailPhone(),
           '/signup/user': (context) => NamePassword(),
           '/signup/birthday': (context) => Birthday(),
