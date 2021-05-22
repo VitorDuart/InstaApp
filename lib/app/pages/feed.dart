@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:insta_app/app/models/post.dart';
 import 'package:insta_app/app/models/user.dart';
+import 'package:insta_app/app/services/postService.dart';
+import 'package:insta_app/app/widgets/postWidget.dart';
 import 'package:provider/provider.dart';
 
 class Feed extends StatefulWidget {
@@ -8,9 +11,16 @@ class Feed extends StatefulWidget {
 }
 
 class FeedState extends State<Feed> {
-  void newPost() {}
-
+  PostService postService = PostService();
   void chat() {}
+
+  List<PostWidget> getPost(List<Post> posts) {
+    return List<PostWidget>.from(
+      posts.map(
+        (post) => PostWidget(post: post),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,8 +70,27 @@ class FeedState extends State<Feed> {
                 color: Colors.amber,
                 child: Center(child: Text('Em breve stories')),
               ),
-              //Expanded(child: ListView()),
-              Image.network('http://10.0.0.118:3000/images/ObecJwb8.jpg'),
+              FutureBuilder(
+                  future: postService.getAllPost(user.username),
+                  builder: (context, snapshot) {
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.none:
+                      case ConnectionState.waiting:
+                        return Expanded(
+                            child: Center(child: CircularProgressIndicator()));
+                      default:
+                        if (snapshot.hasError) {
+                          return Center(
+                            child: Text("Erro ao carregar..."),
+                          );
+                        } else {
+                          return Expanded(
+                              child: ListView(
+                            children: getPost(snapshot.data),
+                          ));
+                        }
+                    }
+                  }),
             ],
           ),
         );

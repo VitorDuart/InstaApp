@@ -8,9 +8,8 @@ class User extends ChangeNotifier {
   String email;
   String birthday;
   String profilePhoto;
-  String followersUrl;
-  String followingUrl;
-  String postsUrl;
+  List<dynamic> followersList;
+  List<dynamic> followingList;
   String followers;
   String following;
   String posts;
@@ -20,9 +19,8 @@ class User extends ChangeNotifier {
     this.name,
     this.username,
     this.profilePhoto,
-    this.followersUrl,
-    this.followingUrl,
-    this.postsUrl,
+    this.followersList,
+    this.followingList,
     this.followers,
     this.following,
     this.posts,
@@ -33,9 +31,8 @@ class User extends ChangeNotifier {
     name = json['name'];
     username = json['username'];
     profilePhoto = json['profilePhoto'];
-    followersUrl = json['followers'];
-    followingUrl = json['following'];
-    postsUrl = json['postsUrl'];
+    followersList = json['followersList'];
+    followingList = json['followingList'];
     followers = json['followers'];
     following = json['following'];
     posts = json['posts'];
@@ -46,9 +43,8 @@ class User extends ChangeNotifier {
         "name": this.name,
         "username": this.username,
         "profilePhoto": this.profilePhoto,
-        "followersUrl": this.followersUrl,
-        "followingUrl": this.followingUrl,
-        "postsUrl": this.postsUrl,
+        "followersList": this.followersList,
+        "followingList": this.followingList,
         "followers": this.followers,
         "following": this.following,
         "posts": this.posts,
@@ -59,9 +55,8 @@ class User extends ChangeNotifier {
     name = json['name'];
     username = json['username'];
     profilePhoto = json['profilePhoto'];
-    followersUrl = json['followers'];
-    followingUrl = json['following'];
-    postsUrl = json['postsUrl'];
+    followersList = json['followersList'];
+    followingList = json['followingList'];
     followers = json['followers'];
     following = json['following'];
     posts = json['posts'];

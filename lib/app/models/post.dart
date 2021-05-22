@@ -1,20 +1,21 @@
+import 'package:insta_app/app/models/user.dart';
+import 'dart:convert';
+
 class Post {
   String id;
-  String username;
+  User user;
   String caption;
-  String date;
   String location;
   String image;
-  List<String> userLiked;
-  List<Map<String, dynamic>> userComments;
+  List<dynamic> userLiked;
+  List<dynamic> userComments;
   String likeds;
   String comments;
 
   Post({
     this.id,
-    this.username,
+    this.user,
     this.caption,
-    this.date,
     this.image,
     this.userComments,
     this.likeds,
@@ -23,9 +24,8 @@ class Post {
 
   Post.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    username = json['username'];
+    user = User.fromJson(json['user']);
     caption = json['caption'];
-    date = json['date'];
     image = json['image'];
     userLiked = json['userLiked'];
     userComments = json['userComments'];
