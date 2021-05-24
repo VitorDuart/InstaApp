@@ -30,7 +30,7 @@ class FeedState extends State<Feed> {
           appBar: AppBar(
             title: Text(
               'Instagram',
-              style: TextStyle(color: Colors.black),
+              style: TextStyle(color: Colors.black, fontFamily: 'Billabong'),
             ),
             elevation: 0,
             backgroundColor: Colors.white,
