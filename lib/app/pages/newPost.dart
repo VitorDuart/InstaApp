@@ -76,7 +76,7 @@ class NewPostState extends State<NewPost> {
   onPressedDone(context, user) {
     _keyForm.currentState.save();
     Future<Map<String, dynamic>> response =
-        postService.store(user.username, _image, caption);
+        postService.store(user, _image, caption);
     response.then((value) {
       if (value != null) {
         Navigator.pushReplacementNamed(context, '/home');

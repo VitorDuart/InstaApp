@@ -20,6 +20,7 @@ dependencies:
   scroll_date_picker: ^2.0.1
   http: ^0.13.3
   image_picker: ^0.7.5+2
+  socket_io_client: ^1.0.1
 
 
 dev_dependencies:

@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:insta_app/app/models/user.dart';
 import 'package:insta_app/app/services/login.dart';
+import 'package:socket_io_client/socket_io_client.dart';
+import 'package:insta_app/app/helps/network.dart';
 
 // ignore: must_be_immutable
 class Login extends StatelessWidget {
   final _keyForm = GlobalKey<FormState>();
   LoginService loginService = LoginService();
+  Socket socket;
+
   String userInput;
   String password;
 
@@ -18,9 +22,14 @@ class Login extends StatelessWidget {
     response.then((json) {
       if (json != null) {
         user.setUser(json);
+        socket = io(
+          Network.socket,
+          OptionBuilder().setTransports(['websocket']) // for Flutter or Dart VM
+              .setQuery({'user': user.username}) // optional
+              .build(),
+        );
         Navigator.pushReplacementNamed(context, '/home');
       }
-      print("The user or password not exist");
     });
   }
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:insta_app/app/pages/editProfile.dart';
 import 'package:insta_app/app/pages/home.dart';
 import 'package:insta_app/app/pages/loginPage.dart';
 import 'package:insta_app/app/pages/newPost.dart';
@@ -18,6 +19,7 @@ class App extends StatelessWidget {
         Provider(create: (context) => EmailPhone()),
         Provider(create: (context) => NamePassword()),
         Provider(create: (context) => Birthday()),
+        Provider(create: (context) => EditProfile()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -33,6 +35,7 @@ class App extends StatelessWidget {
           '/signup/user': (context) => NamePassword(),
           '/signup/birthday': (context) => Birthday(),
           '/signup/done': (context) => Finish(),
+          '/user/edit': (context) => EditProfile(),
         },
       ),
     );

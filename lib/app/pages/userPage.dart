@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:insta_app/app/services/postService.dart';
 import 'package:insta_app/app/services/userService.dart';
 import 'package:insta_app/app/models/post.dart';
 import 'package:provider/provider.dart';
@@ -12,15 +13,14 @@ class UserPage extends StatefulWidget {
 class UserPageState extends State<UserPage>
     with SingleTickerProviderStateMixin {
   TabController _tabController;
-  UserService userService;
-  List<Post> posts;
+  UserService userService = UserService();
+  PostService postService = PostService();
+  List<Post> posts = [];
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(vsync: this, length: 2);
-    userService = UserService();
-    posts = userService.posts();
   }
 
   @override
@@ -29,13 +29,8 @@ class UserPageState extends State<UserPage>
     super.dispose();
   }
 
-  void editProfile() {}
-
-  Container postBuilder(context, idx) {
-    Post post = posts[idx];
-    return Container(
-      child: null//Image.network(post.assetsUrl[0]),
-    );
+  Widget postBuilder(context, idx) {
+    return Image.network(posts[idx].image);
   }
 
   @override
@@ -44,7 +39,7 @@ class UserPageState extends State<UserPage>
       return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          elevation: 0,
+          elevation: 0.5,
           backgroundColor: Colors.white,
           title: Text(
             user.username,
@@ -54,7 +49,8 @@ class UserPageState extends State<UserPage>
           ),
           actions: [
             TextButton(
-              onPressed: () {},
+              onPressed: () =>
+                  Navigator.pushNamed(context, '/home/selectimage'),
               child: Icon(
                 Icons.add_box_outlined,
                 color: Colors.black,
@@ -63,30 +59,25 @@ class UserPageState extends State<UserPage>
           ],
         ),
         body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
               margin: EdgeInsets.only(top: 18, bottom: 18),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Column(children: <Widget>[
-                    Container(
-                      width: 85,
-                      height: 85,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle, color: Colors.blue),
-                      child: user.profilePhoto == ''
-                          ? Icon(Icons.person, size: 80)
-                          : Image.network(user.profilePhoto),
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(top: 10),
-                      child: Text(user.name),
-                    ),
-                  ]),
+                  Container(
+                    margin: EdgeInsets.only(left: 20),
+                    width: 85,
+                    height: 85,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle, color: Colors.blue),
+                    child: user.profilePhoto == ''
+                        ? null
+                        : Image.network(user.profilePhoto),
+                  ),
                   Container(
                     margin: EdgeInsets.only(
-                        left: MediaQuery.of(context).size.width * 0.05),
+                        left: MediaQuery.of(context).size.width * 0.1),
                     child: Column(
                       children: <Widget>[
                         Text(user.posts == null ? '0' : user.posts),
@@ -118,20 +109,26 @@ class UserPageState extends State<UserPage>
               ),
             ),
             Container(
-              width: MediaQuery.of(context).size.width * 0.9,
+              margin: EdgeInsets.only(left: 17, bottom: 15),
+              child: Text(user.name),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.98,
+              height: 35,
+              margin: EdgeInsets.only(left: 15, right: 15),
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.black12),
               ),
               child: TextButton(
-                onPressed: editProfile,
+                onPressed: () => Navigator.pushNamed(context, '/user/edit'),
                 child: Text(' Edit Profile'),
               ),
             ),
             Container(
-              width: MediaQuery.of(context).size.width * 0.9,
+              alignment: Alignment.center,
+              width: MediaQuery.of(context).size.width,
               margin: EdgeInsets.only(top: 20),
               height: 70,
-              color: Colors.amber,
               child: Center(child: Text('Highlight in soon')),
             ),
             TabBar(
@@ -148,27 +145,44 @@ class UserPageState extends State<UserPage>
               controller: _tabController,
               indicatorSize: TabBarIndicatorSize.tab,
             ),
-            Expanded(
-              child: TabBarView(
-                children: [
-                  posts.length == 0
-                      ? Container(child: Center(child: Text('Nothing Posts')))
-                      : GridView.builder(
-                          gridDelegate:
-                              SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent: 200,
-                            childAspectRatio: 3 / 2,
-                            crossAxisSpacing: 20,
-                            mainAxisSpacing: 20,
+            FutureBuilder<List<Post>>(
+                future: postService.get(user.username),
+                builder: (context, snapshot) {
+                  posts = snapshot.data;
+                  switch (snapshot.connectionState) {
+                    case ConnectionState.none:
+                    case ConnectionState.waiting:
+                      return Expanded(
+                          child: Center(child: CircularProgressIndicator()));
+                    default:
+                      if (snapshot.hasError) {
+                        return Center(
+                          child: Text("Erro ao carregar..."),
+                        );
+                      } else {
+                        return Expanded(
+                          child: TabBarView(
+                            controller: _tabController,
+                            children: [
+                              GridView.builder(
+                                gridDelegate:
+                                    SliverGridDelegateWithMaxCrossAxisExtent(
+                                  maxCrossAxisExtent: 150,
+                                  crossAxisSpacing: 1,
+                                  mainAxisSpacing: 1,
+                                ),
+                                itemCount: posts.length == 0 ? 0 : posts.length,
+                                itemBuilder: postBuilder,
+                              ),
+                              Container(
+                                child: Center(child: Text('Tag People')),
+                              ),
+                            ],
                           ),
-                          itemCount: posts.length,
-                          itemBuilder: postBuilder,
-                        ),
-                  Container(child: Center(child: Text('Tag People'))),
-                ],
-                controller: _tabController,
-              ),
-            ),
+                        );
+                      }
+                  }
+                }),
           ],
         ),
       );

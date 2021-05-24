@@ -73,6 +73,7 @@ class FeedState extends State<Feed> {
               FutureBuilder(
                   future: postService.getAllPost(user.username),
                   builder: (context, snapshot) {
+                    print('dfdfsdf');
                     switch (snapshot.connectionState) {
                       case ConnectionState.none:
                       case ConnectionState.waiting:

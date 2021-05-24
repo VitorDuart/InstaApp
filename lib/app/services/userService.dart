@@ -5,7 +5,7 @@ import 'dart:convert';
 import 'dart:math';
 
 class UserService {
-  String baseUrl = '10.0.0.118:3000';
+  String baseUrl = '192.168.56.1:3000';
 
   List<Post> posts() {
     return <Post>[];

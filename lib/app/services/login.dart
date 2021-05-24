@@ -1,15 +1,14 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class LoginService {
-  String baseUrl = '192.168.56.1:3000';
-  String endPoint = 'login';
+import 'package:insta_app/app/helps/network.dart';
 
+class LoginService {
   Future<Map<String, dynamic>> login(username, password) async {
     Map<String, String> headers = {'Content-type': 'application/json'};
 
     var response = await http.post(
-      Uri.http(baseUrl, endPoint),
+      Uri.http(Network.api, 'login'),
       headers: headers,
       body: jsonEncode(<String, String>{
         'username': username,

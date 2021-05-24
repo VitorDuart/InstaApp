@@ -1,11 +1,10 @@
 import 'package:http/http.dart' as http;
+import 'package:insta_app/app/helps/network.dart';
 import 'dart:convert';
 
 import 'package:insta_app/app/models/post.dart';
 
 class PostService {
-  String baseUrl = '192.168.56.1:3000';
-
   Future<Map<String, dynamic>> store(user, image, caption) async {
     Map<String, String> headers = {'Content-type': 'application/json'};
 
@@ -14,7 +13,7 @@ class PostService {
     var spl = image.path.split('.');
     var ext = "." + spl.last;
     var response = await http.post(
-      Uri.http(baseUrl, 'post'),
+      Uri.http(Network.api, 'post'),
       headers: headers,
       body: jsonEncode(<String, dynamic>{
         "user": user.toJson(),
@@ -36,7 +35,19 @@ class PostService {
 
   Future<List<Post>> getAllPost(username) async {
     var response = await http.get(
-      Uri.http(baseUrl, 'post/postsall'),
+      Uri.http(Network.api, 'post/postsall'),
+      headers: {'username': username},
+    );
+    if (response.statusCode != 200) return null;
+    Iterable list = jsonDecode(response.body);
+
+    List<Post> posts = List<Post>.from(list.map((post) => Post.fromJson(post)));
+    return posts;
+  }
+
+  Future<List<Post>> get(username) async {
+    var response = await http.get(
+      Uri.http(Network.api, 'post/postsall'),
       headers: {'username': username},
     );
     if (response.statusCode != 200) return null;
