@@ -73,9 +73,9 @@ class UserPageState extends State<UserPage>
                       shape: BoxShape.circle,
                       color: Colors.blue,
                       image: DecorationImage(
-                        fit: BoxFit.fill,
+                        fit: BoxFit.cover,
                         image: user.profilePhoto == ''
-                            ? null
+                            ? Image.asset('assets/images/perfil.jpg').image
                             : Image.network(user.profilePhoto).image,
                       ),
                     ),

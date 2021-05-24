@@ -73,11 +73,11 @@ class EditProfileState extends State<EditProfile> {
                   shape: BoxShape.circle,
                   color: Colors.blue,
                   image: DecorationImage(
-                      fit: BoxFit.fill,
+                      fit: BoxFit.cover,
                       image: _image == null
                           ? (user.profilePhoto == ''
-                              ? null
-                              : Image.network(user.profilePhoto))
+                              ? Image.asset('assets/images/perfil.jpg').image
+                              : Image.network(user.profilePhoto).image)
                           : Image.file(_image).image),
                 ),
               ),

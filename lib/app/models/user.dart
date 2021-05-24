@@ -71,6 +71,12 @@ class User extends ChangeNotifier {
     notifyListeners();
   }
 
+  void setName(name) {
+    this.name = name;
+
+    notifyListeners();
+  }
+
   void setEmail(email) {
     this.email = email;
     notifyListeners();
