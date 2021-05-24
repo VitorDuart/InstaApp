@@ -23,11 +23,16 @@ class PostWidgetState extends State<PostWidget> {
                 Container(
                   width: 55,
                   height: 55,
-                  decoration:
-                      BoxDecoration(shape: BoxShape.circle, color: Colors.blue),
-                  child: widget.post.user.profilePhoto == ''
-                      ? null
-                      : Image.network(widget.post.user.profilePhoto),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.blue,
+                    image: DecorationImage(
+                      fit: BoxFit.contain,
+                      image: widget.post.user.profilePhoto == ''
+                          ? Image.asset('assets/images/perfil.jpg').image
+                          : Image.network(widget.post.user.profilePhoto).image,
+                    ),
+                  ),
                 ),
                 Text(widget.post.user.username),
               ],

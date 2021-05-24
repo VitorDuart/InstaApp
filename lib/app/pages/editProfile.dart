@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:insta_app/app/models/user.dart';
+import 'package:insta_app/app/services/userService.dart';
 import 'package:provider/provider.dart';
 
 class EditProfile extends StatefulWidget {
@@ -13,7 +14,7 @@ class EditProfileState extends State<EditProfile> {
   final _keyForm = GlobalKey<FormState>();
   String name;
   String username;
-
+  UserService userService = UserService();
   File _image;
 
   final picker = ImagePicker();
@@ -26,6 +27,18 @@ class EditProfileState extends State<EditProfile> {
         _image = File(pickedFile.path);
       } else {
         print('No image selected.');
+      }
+    });
+  }
+
+  onPressedDone(context, user) {
+    _keyForm.currentState.save();
+    Future<Map<String, dynamic>> response =
+        userService.updateNameUsername(user, name, username, _image);
+    response.then((value) {
+      if (value != null) {
+        user.setNameUsernamePhoto(name, username, value['profilePhoto']);
+        Navigator.pushReplacementNamed(context, '/home');
       }
     });
   }
@@ -44,7 +57,7 @@ class EditProfileState extends State<EditProfile> {
           actions: [
             TextButton(
               child: Icon(Icons.done),
-              onPressed: () {},
+              onPressed: () => onPressedDone(context, user),
             ),
           ],
         ),
@@ -56,11 +69,17 @@ class EditProfileState extends State<EditProfile> {
                 margin: EdgeInsets.only(left: 20),
                 width: 85,
                 height: 85,
-                decoration:
-                    BoxDecoration(shape: BoxShape.circle, color: Colors.blue),
-                child: user.profilePhoto == ''
-                    ? null
-                    : Image.network(user.profilePhoto),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.blue,
+                  image: DecorationImage(
+                      fit: BoxFit.fill,
+                      image: _image == null
+                          ? (user.profilePhoto == ''
+                              ? null
+                              : Image.network(user.profilePhoto))
+                          : Image.file(_image).image),
+                ),
               ),
             ),
             Container(
@@ -98,3 +117,10 @@ class EditProfileState extends State<EditProfile> {
     });
   }
 }
+
+
+// _image == null
+//                           ? (user.profilePhoto == ''
+//                               ? null
+//                               : Image.network(user.profilePhoto))
+//                           : Image.file(_image, fit: BoxFit.scaleDown),

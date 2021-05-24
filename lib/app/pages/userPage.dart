@@ -70,10 +70,15 @@ class UserPageState extends State<UserPage>
                     width: 85,
                     height: 85,
                     decoration: BoxDecoration(
-                        shape: BoxShape.circle, color: Colors.blue),
-                    child: user.profilePhoto == ''
-                        ? null
-                        : Image.network(user.profilePhoto),
+                      shape: BoxShape.circle,
+                      color: Colors.blue,
+                      image: DecorationImage(
+                        fit: BoxFit.fill,
+                        image: user.profilePhoto == ''
+                            ? null
+                            : Image.network(user.profilePhoto).image,
+                      ),
+                    ),
                   ),
                   Container(
                     margin: EdgeInsets.only(

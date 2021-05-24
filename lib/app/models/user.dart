@@ -64,18 +64,10 @@ class User extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setId(id) {
-    this.id = id;
-    notifyListeners();
-  }
-
-  void setName(name) {
+  void setNameUsernamePhoto(name, username, profilePhoto) {
     this.name = name;
-    notifyListeners();
-  }
-
-  void setUsername(username) {
     this.username = username;
+    this.profilePhoto = profilePhoto;
     notifyListeners();
   }
 

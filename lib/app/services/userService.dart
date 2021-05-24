@@ -1,30 +1,15 @@
-import 'package:insta_app/app/models/user.dart';
-import 'package:insta_app/app/models/post.dart';
+import 'package:insta_app/app/helps/network.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:math';
 
 class UserService {
-  String baseUrl = '192.168.56.1:3000';
-
-  List<Post> posts() {
-    return <Post>[];
-  }
-
-  List<User> followers() {
-    return [];
-  }
-
-  List<User> following() {
-    return [];
-  }
-
   Future<Map<String, dynamic>> store(user) async {
     String numberUser = Random().nextInt(100).toString();
     Map<String, String> headers = {'Content-type': 'application/json'};
 
     var response = await http.post(
-      Uri.http(baseUrl, 'user'),
+      Uri.http(Network.api, 'user'),
       headers: headers,
       body: jsonEncode(<String, String>{
         'name': user.name,
@@ -40,6 +25,33 @@ class UserService {
         'followers': '0',
         'following': '0',
         'posts': '0',
+      }),
+    );
+
+    if (response.statusCode != 200) return null;
+    return jsonDecode(response.body);
+  }
+
+  Future<Map<String, dynamic>> updateNameUsername(
+      user, name, username, image) async {
+    List<int> imageBytes = image.readAsBytesSync();
+    String base64Image = base64.encode(imageBytes);
+    var spl = image.path.split('.');
+    var ext = "." + spl.last;
+
+    Map<String, String> headers = {
+      'Content-type': 'application/json',
+      'username': user.username,
+    };
+
+    var response = await http.put(
+      Uri.http(Network.api, 'user'),
+      headers: headers,
+      body: jsonEncode(<String, String>{
+        'name': name,
+        'username': username,
+        'image': base64Image,
+        "ext": ext,
       }),
     );
 
