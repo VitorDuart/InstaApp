@@ -21,7 +21,7 @@ dependencies:
   http: ^0.13.3
   image_picker: ^0.7.5+2
   socket_io_client: ^1.0.1
-
+  google_fonts: ^2.1.0
 
 dev_dependencies:
   flutter_test:
@@ -30,6 +30,11 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  fonts:
+    - family: Billabong
+      fonts:
+        - asset: fonts/FontsFree-Net-Billabong.ttf
 
   assets:
     - assets/images/

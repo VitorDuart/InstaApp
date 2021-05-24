@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:insta_app/app/models/user.dart';
 import 'package:insta_app/app/services/login.dart';
@@ -39,29 +40,55 @@ class Login extends StatelessWidget {
       builder: (context, user, child) {
         return Scaffold(
           body: Container(
+            padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.06),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Instragram'),
+                Text(
+                  'Instragram',
+                  style: TextStyle(fontFamily: 'Billabong', fontSize: 50),
+                ),
                 Form(
                   key: _keyForm,
                   child: Column(
                     children: [
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          hintText: 'Phone number, email or username',
+                      Container(
+                        margin: EdgeInsets.only(
+                            bottom: MediaQuery.of(context).size.height * 0.025,
+                            top: MediaQuery.of(context).size.height * 0.04),
+                        height: MediaQuery.of(context).size.height * 0.07,
+                        child: TextFormField(
+                          decoration: const InputDecoration(
+                            border:
+                                OutlineInputBorder(borderSide: BorderSide()),
+                            hintText: 'Phone number, email or username',
+                          ),
+                          onSaved: (value) => userInput = value,
                         ),
-                        onSaved: (value) => userInput = value,
-                      ),
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          hintText: 'Password',
-                        ),
-                        onSaved: (value) => password = value,
                       ),
                       Container(
+                        height: MediaQuery.of(context).size.height * 0.07,
+                        child: TextFormField(
+                          obscureText: true,
+                          decoration: const InputDecoration(
+                            hintText: 'Password',
+                            border:
+                                OutlineInputBorder(borderSide: BorderSide()),
+                          ),
+                          onSaved: (value) => password = value,
+                        ),
+                      ),
+                      Container(
+                        width: double.infinity,
+                        margin: EdgeInsets.only(
+                            bottom: MediaQuery.of(context).size.height * 0.025,
+                            top: MediaQuery.of(context).size.height * 0.01),
                         child: TextButton(
-                          child: Text('Login'),
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  Colors.blue)),
+                          child: Text('Login',
+                              style: TextStyle(color: Colors.white)),
                           onPressed: () => onPressLogin(context, user),
                         ),
                       ),
