@@ -41,6 +41,11 @@ class EmailPhoneState extends State<EmailPhone>
           backgroundColor: Colors.white,
           body: Center(
             child: Container(
+              padding: EdgeInsets.only(
+                left: MediaQuery.of(context).size.width * 0.06,
+                right: MediaQuery.of(context).size.width * 0.06,
+                top: MediaQuery.of(context).size.height * 0.2,
+              ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -71,14 +76,32 @@ class EmailPhoneState extends State<EmailPhone>
                             key: _keyForm,
                             child: Column(
                               children: [
-                                TextFormField(
-                                  decoration:
-                                      const InputDecoration(hintText: 'Email'),
-                                  onSaved: (value) => email = value,
+                                Container(
+                                  margin: EdgeInsets.only(
+                                      top: MediaQuery.of(context).size.height *
+                                          0.02),
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.07,
+                                  child: TextFormField(
+                                    decoration: const InputDecoration(
+                                      hintText: 'Email',
+                                      border: OutlineInputBorder(
+                                          borderSide: BorderSide()),
+                                    ),
+                                    onSaved: (value) => email = value,
+                                  ),
                                 ),
                                 Container(
+                                  width: double.infinity,
                                   child: TextButton(
-                                    child: Text('Next'),
+                                    style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all<Color>(
+                                                Colors.blue)),
+                                    child: Text(
+                                      'Next',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
                                     onPressed: () =>
                                         updateUserEmail(context, user),
                                   ),
@@ -132,6 +155,11 @@ class NamePasswordState extends State<NamePassword> {
     return Consumer<User>(builder: (ctx, user, child) {
       return Scaffold(
           body: Container(
+        padding: EdgeInsets.only(
+          left: MediaQuery.of(context).size.width * 0.06,
+          right: MediaQuery.of(context).size.width * 0.06,
+          top: MediaQuery.of(context).size.height * 0.2,
+        ),
         child: Column(
           children: [
             Container(child: Text('NAME AND PASSWORD')),
@@ -139,13 +167,28 @@ class NamePasswordState extends State<NamePassword> {
               key: _keyForm,
               child: Column(
                 children: [
-                  TextFormField(
-                    decoration: const InputDecoration(hintText: 'Full name'),
-                    onSaved: (value) => name = value,
+                  Container(
+                    margin: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.height * 0.02),
+                    height: MediaQuery.of(context).size.height * 0.07,
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                          hintText: 'Full name',
+                          border: OutlineInputBorder(borderSide: BorderSide())),
+                      onSaved: (value) => name = value,
+                    ),
                   ),
-                  TextFormField(
-                    decoration: const InputDecoration(hintText: 'Password'),
-                    onSaved: (value) => password = value,
+                  Container(
+                    margin: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.height * 0.02),
+                    height: MediaQuery.of(context).size.height * 0.07,
+                    child: TextFormField(
+                      obscureText: true,
+                      decoration: const InputDecoration(
+                          hintText: 'Password',
+                          border: OutlineInputBorder(borderSide: BorderSide())),
+                      onSaved: (value) => password = value,
+                    ),
                   ),
                   CheckboxListTile(
                     value: check,
@@ -157,8 +200,15 @@ class NamePasswordState extends State<NamePassword> {
                     title: Text('Remember passord'),
                   ),
                   Container(
+                    width: double.infinity,
                     child: TextButton(
-                      child: Text('Continue'),
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.blue)),
+                      child: Text(
+                        'Continue',
+                        style: TextStyle(color: Colors.white),
+                      ),
                       onPressed: () => updateNamePassword(context, user),
                     ),
                   ),
@@ -203,54 +253,95 @@ class BirthdayState extends State<Birthday> {
   Widget build(BuildContext context) {
     return Consumer<User>(builder: (ctx, user, child) {
       return Scaffold(
-        body: Column(
-          children: [
-            Container(
-              child: Column(
-                children: [
-                  Image.asset(
-                    'assets/images/birthday_cake.png',
-                    width: 80,
-                    height: 80,
-                  ),
-                  Text('Add Your Birthdat'),
-                  Text("This won't be part of your public profile."),
-                  Text("Why do I need to provide my birthday"),
-                  Text(
-                    month[currentDate.month] +
-                        ', ' +
-                        currentDate.year.toString() +
-                        ' - ' +
-                        (DateTime.now().year - currentDate.year).toString() +
-                        ' Years Old',
-                  ),
-                ],
+        body: Container(
+          padding: EdgeInsets.only(
+            left: MediaQuery.of(context).size.width * 0.06,
+            right: MediaQuery.of(context).size.width * 0.06,
+            top: MediaQuery.of(context).size.height * 0.15,
+          ),
+          child: Column(
+            children: [
+              Container(
+                child: Column(
+                  children: [
+                    Image.asset(
+                      'assets/images/birthday_cake.png',
+                      width: 80,
+                      height: 80,
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).size.height * 0.03,
+                      ),
+                      child: Text('Add Your Birthdat'),
+                    ),
+                    Text("This won't be part of your public profile."),
+                    Text("Why do I need to provide my birthday"),
+                    Container(
+                      margin: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.height * 0.025,
+                      ),
+                      width: 200,
+                      height: 30,
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.blueAccent)),
+                      child: Center(
+                        child: Text(
+                          month[currentDate.month] +
+                              ', ' +
+                              currentDate.year.toString() +
+                              ' - ' +
+                              (DateTime.now().year - currentDate.year)
+                                  .toString() +
+                              ' Years Old',
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            TextButton(
-              onPressed: () => updateUserBirthday(context, user),
-              child: Text('Next'),
-            ),
-            Container(
-              //width: MediaQuery.of(context).size.width * 0.9,
-              height: MediaQuery.of(context).size.width * 0.2,
-              child: ScrollDatePicker(
-                itemExtent: 33.0,
-                minimumYear: 1950,
-                maximumYear: currentDate.year,
-                initialDateTime: DateTime.parse("2020-05-01"),
-                isLoop: false,
-                locale: DatePickerLocale.en_us,
-                selectedBoxDecoration: BoxDecoration(
-                    border: Border.all(color: Colors.black87, width: 1.5)),
-                onChanged: (value) {
-                  setState(() {
-                    currentDate = value;
-                  });
-                },
+              Container(
+                padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.height * 0.25,
+                ),
+                child: Column(
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      child: TextButton(
+                        style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(Colors.blue)),
+                        onPressed: () => updateUserBirthday(context, user),
+                        child:
+                            Text('Next', style: TextStyle(color: Colors.white)),
+                      ),
+                    ),
+                    Container(
+                      //width: MediaQuery.of(context).size.width * 0.9,
+                      height: MediaQuery.of(context).size.width * 0.2,
+                      child: ScrollDatePicker(
+                        itemExtent: 33.0,
+                        minimumYear: 1950,
+                        maximumYear: currentDate.year,
+                        initialDateTime: DateTime.parse("2020-05-01"),
+                        isLoop: false,
+                        locale: DatePickerLocale.en_us,
+                        selectedBoxDecoration: BoxDecoration(
+                            border:
+                                Border.all(color: Colors.black87, width: 1.5)),
+                        onChanged: (value) {
+                          setState(() {
+                            currentDate = value;
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       );
     });
@@ -282,16 +373,36 @@ class FinishState extends State<Finish> {
       builder: (ctx, user, child) {
         return Scaffold(
           body: Container(
+            padding: EdgeInsets.only(
+              left: MediaQuery.of(context).size.width * 0.06,
+              right: MediaQuery.of(context).size.width * 0.06,
+              top: MediaQuery.of(context).size.height * 0.38,
+            ),
             child: Column(
               children: [
                 Text('WELCOME TO INSTAGRAM,'),
-                Text(user.name),
+                Container(
+                  margin: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).size.height * 0.04,
+                  ),
+                  child: Text(user.name),
+                ),
                 Text(
                   'Find People to follow and start sharing photos. You can Change your username anytime',
+                  textAlign: TextAlign.center,
                 ),
-                TextButton(
-                  onPressed: () => onPressedFinish(context, user),
-                  child: Text('Next'),
+                Container(
+                  width: double.infinity,
+                  child: TextButton(
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.blue)),
+                    onPressed: () => onPressedFinish(context, user),
+                    child: Text(
+                      'Next',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
                 ),
               ],
             ),
